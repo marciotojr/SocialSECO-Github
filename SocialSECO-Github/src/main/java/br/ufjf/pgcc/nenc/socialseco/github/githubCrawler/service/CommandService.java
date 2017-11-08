@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.GithubCrawler;
+package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service;
 
 import org.json.JSONObject;
 
@@ -12,6 +12,6 @@ import org.json.JSONObject;
  *
  * @author marci
  */
-public interface CommandGET {
-    public void executeGETMethod();
+public interface CommandService {
+    public void crawl();
 }
