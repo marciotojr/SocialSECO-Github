@@ -1,6 +1,7 @@
 package br.ufjf.pgcc.nenc.socialseco.github.util;
 
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.ColaboratorsService;
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.LanguageService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.RepositoryFollowerService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.RepositoryService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.UserFollowerService;
@@ -28,16 +29,19 @@ public class Main {
             ColaboratorsService cs = new ColaboratorsService();
             RepositoryFollowerService rfs = new RepositoryFollowerService();
             UserFollowerService ufs = new UserFollowerService();
+            LanguageService ls = new LanguageService();
             Thread userThread  = new Thread(us, "users");
             Thread repoThread = new Thread(rs, "repos");
             Thread collaboratorsThread = new Thread(cs, "colab");
             Thread stargazersThread = new Thread(rfs, "stargazers");
             Thread followersThread = new Thread(ufs, "follower");
-            collaboratorsThread.start();
-            followersThread.start();
-            stargazersThread.start();
-            userThread.start();
-            repoThread.start();
+            Thread languagesThread = new Thread(ls, "languages");
+            languagesThread.start();
+            //collaboratorsThread.start();
+            //followersThread.start();
+            //stargazersThread.start();
+            //userThread.start();
+            //repoThread.start();
             /*
             ParameterAccess pa = ParameterAccess.getInstance();
             System.out.println(pa.getParameter("exemplo"));
@@ -73,15 +77,7 @@ public class Main {
         }
 
     }
-    
-    public static void readJson(String jsonString){
-        JSONArray array = new JSONArray(jsonString);
-        System.out.println(array.get(0).toString());
-    }
-    public static void printJson(String jsonString){
-        JSONArray array = new JSONArray(jsonString);
-        System.out.println(array.get(0));
-    }
+
     /* */
    
 }

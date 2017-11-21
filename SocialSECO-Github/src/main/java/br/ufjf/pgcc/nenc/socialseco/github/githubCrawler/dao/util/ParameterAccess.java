@@ -5,7 +5,7 @@
  */
 package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.util;
 
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.controller.RepositoriesCrawler;
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.RepositoryService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,65 +18,50 @@ import java.util.logging.Logger;
  * @author marci
  */
 public class ParameterAccess {
-    
-    private static ParameterAccess instance=null;
+
+    private static ParameterAccess instance = null;
 
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    public static ParameterAccess getInstance(){
-        if(instance==null){
+    public static ParameterAccess getInstance() {
+        if (instance == null) {
             instance = new ParameterAccess();
         }
         return instance;
     }
-    
+
     private ParameterAccess() {
     }
-    
-    
+
     public String getParameter(String paramName) {
+        String paramValue;
         try {
             open();
 
             statement = connect.createStatement();
 
-            if(paramName.equals("last_repo"))
             resultSet = statement
-                    .executeQuery("SELECT MAX(id) FROM repository");
-            else if(paramName.equals("last_user"))
-                resultSet = statement
-                    .executeQuery("SELECT MAX(id) FROM user");
-            else if(paramName.equals("last_repo_cont"))
-                resultSet = statement
-                    .executeQuery("SELECT MAX(id_repository) FROM repo_colaborator");
-            else if(paramName.equals("last_repo_star"))
-                resultSet = statement
-                    .executeQuery("SELECT MAX(id_repository) FROM repo_follower");
-            else if(paramName.equals("last_user_foll"))
-                resultSet = statement
-                    .executeQuery("SELECT MAX(user_id) FROM user_follower");
-            String paramValue = null;
+                    .executeQuery("SELECT value FROM parameter WHERE name LIKE \"" + paramName + "\" ");
 
             if (resultSet.next()) {
                 paramValue = resultSet.getString(1);
                 return paramValue;
-            }else{
+            } else {
                 return null;
             }
-            
+
         } catch (Exception e) {
-            Logger.getLogger(RepositoriesCrawler.class.getName()).log(Level.SEVERE, null, e);
             return null;
         } finally {
             close();
         }
 
-    }  
-    
-     public void setParameter(String paramName, String paramValue) {}
+    }
+
+    /* public void setParameter(String paramName, String paramValue) {}
     
     /*
     
@@ -102,7 +87,7 @@ public class ParameterAccess {
         }
 
     }
-
+     */
     public void setParameter(String paramName, String paramValue) {
         try {
             String param = getParameter(paramName);
@@ -124,26 +109,24 @@ public class ParameterAccess {
                         .prepareStatement("UPDATE parameter SET value=(?) WHERE name LIKE (?)");
                 // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
                 // Parameters start with 1
-                preparedStatement.setString(2, paramName);
                 preparedStatement.setString(1, paramValue);
+                preparedStatement.setString(2, paramName);
                 preparedStatement.executeUpdate();
             }
         } catch (Exception e) {
-            Logger.getLogger(RepositoriesCrawler.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(RepositoryService.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             close();
         }
     }
 
-*/
-
     private void open() {
-        try{
-        Class.forName("com.mysql.jdbc.Driver");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
 
-        connect = java.sql.DriverManager.getConnection("jdbc:mysql://localhost/github_crawler", "root", "");
-        } catch (Exception e){
-            Logger.getLogger(RepositoriesCrawler.class.getName()).log(Level.SEVERE, null, e);
+            connect = java.sql.DriverManager.getConnection("jdbc:mysql://localhost/github_crawler", "root", "");
+        } catch (Exception e) {
+            Logger.getLogger(RepositoryService.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
