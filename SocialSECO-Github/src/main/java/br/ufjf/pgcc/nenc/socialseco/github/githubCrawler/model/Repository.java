@@ -9,7 +9,7 @@ package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model;
  *
  * @author marci
  */
-public class Repository {
+public class Repository implements Individualizable{
     private int id;
     private int ownerId;
     private String name;
@@ -47,5 +47,8 @@ public class Repository {
         this.name = name;
     }
     
+    public String getURISuffix(){
+        return this.getName().replace("/", "+");
+    }
     
 }

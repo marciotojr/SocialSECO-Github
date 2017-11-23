@@ -1,5 +1,8 @@
 package br.ufjf.pgcc.nenc.socialseco.github.util;
 
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.controler.OntologyManager;
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.Repository;
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.User;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.ColaboratorsService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.LanguageService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.RepositoryFollowerService;
@@ -36,7 +39,13 @@ public class Main {
             Thread stargazersThread = new Thread(rfs, "stargazers");
             Thread followersThread = new Thread(ufs, "follower");
             Thread languagesThread = new Thread(ls, "languages");
-            languagesThread.start();
+            OntologyManager om = new OntologyManager("C:", "social-network.owl");
+            om.createUser(new User(0, "marcio", null));
+            om.createRepository(new Repository(27, 0, "marcio/eseco"));
+            om.createRepository(new Repository(28, 0, "marcio/github"));
+            om.createRepository(new Repository(273, 81, "engineyard/eycap"));
+            om.saveOntology();
+            //languagesThread.start();
             //collaboratorsThread.start();
             //followersThread.start();
             //stargazersThread.start();

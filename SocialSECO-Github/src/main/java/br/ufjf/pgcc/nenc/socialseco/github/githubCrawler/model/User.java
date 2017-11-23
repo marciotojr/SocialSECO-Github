@@ -9,7 +9,7 @@ package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model;
  *
  * @author marci
  */
-public class User {
+public class User implements Individualizable{
     private int id;
     private String userName;
     private String type;
@@ -44,6 +44,11 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String getURISuffix() {
+        return this.getUserName();
     }
     
     

@@ -9,7 +9,7 @@ package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model;
  *
  * @author marci
  */
-public class Language {
+public class Language implements Individualizable{
     private int id;
     private String name;
 
@@ -36,6 +36,11 @@ public class Language {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String getURISuffix() {
+        return this.getName().replaceAll(" ", "+");
     }
     
     

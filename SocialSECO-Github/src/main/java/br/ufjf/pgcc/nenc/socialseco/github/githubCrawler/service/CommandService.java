@@ -48,7 +48,7 @@ public abstract class CommandService implements Runnable {
     abstract public void initialize();
     abstract public void getData() throws PageForbiddenException,NoRemainingRequestsException;
 
-    private final String USER_TOKEN = "token a2e6c2553b07188888bdd4ef57b96327c5a609ff";
+    private final String USER_TOKEN = "token 7ef69b2368773c233c5f7d29039eadf9cb55c05c";
 
     protected String getContent(String url) throws Exception {
 

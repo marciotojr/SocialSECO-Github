@@ -41,7 +41,6 @@ public class RepositoryDAO extends BasicDAO {
 
             if (resultSet.next()) {
                 repo = new Repository(resultSet.getInt("id"), resultSet.getInt("owner_id"), resultSet.getString("name"));
-                repo.setName(repo.getName().replace("/", "!"));
             }
         } catch (Exception e) {
 
@@ -52,7 +51,6 @@ public class RepositoryDAO extends BasicDAO {
     
     public Repository loadRepo(String name) {
         open();
-        name=name.replace("!", "/");
         Repository repo = null;
         try {
             statement = connect.createStatement();
@@ -62,7 +60,6 @@ public class RepositoryDAO extends BasicDAO {
 
             if (resultSet.next()) {
                 repo = new Repository(resultSet.getInt("id"), resultSet.getInt("owner_id"), resultSet.getString("name"));
-                repo.setName(repo.getName().replace("/", "!"));
             }
         } catch (Exception e) {
 
