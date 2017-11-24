@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service;
+package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess;
 
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.exception.NoRemainingRequestsException;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.exception.PageForbiddenException;

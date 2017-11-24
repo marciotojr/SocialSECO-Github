@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service;
+package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess;
 
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.CommandService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.util.ParameterAccess;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.RepositoryDAO;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.Repository;
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.UserDAO;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.User;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.exception.NoRemainingRequestsException;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.exception.PageForbiddenException;
@@ -18,34 +18,41 @@ import org.json.JSONObject;
  *
  * @author marci
  */
-public class ColaboratorsService extends CommandService {
+public class UserFollowerService extends CommandService{
 
-    private int currentRepo = 0;
+    private int currentUser = 0;
+
+
+    private JSONArray sendGet() throws Exception {
+
+        User user = UserDAO.getInstance().loadUser(currentUser);
+        String url = "https://api.github.com/users/" + user.getUserName() + "/followers";
+
+        return new JSONArray(getContent(url));
+
+    }
 
     @Override
     public void increment() {
-        ParameterAccess.getInstance().setParameter("last_repo_cont", Integer.toString(currentRepo));
-        currentRepo = RepositoryDAO.getInstance().nextRepo(currentRepo);
+        ParameterAccess.getInstance().setParameter("last_user_star", Integer.toString(currentUser));
+        currentUser = UserDAO.getInstance().nextUser(currentUser);
     }
 
     @Override
     public void initialize() {
-        String lastRepo = ParameterAccess.getInstance().getParameter("last_repo_cont");
-        if (lastRepo == null) {
-            currentRepo = RepositoryDAO.getInstance().nextRepo(new Integer(currentRepo));
+        String lastUser = ParameterAccess.getInstance().getParameter("last_user_star");
+        if (lastUser == null) {
+            currentUser = UserDAO.getInstance().nextUser(currentUser);
         } else {
-            currentRepo = new Integer(lastRepo);
+            currentUser = new Integer(lastUser);
         }
     }
 
     @Override
     public void getData() throws PageForbiddenException, NoRemainingRequestsException {
-        Repository repo = RepositoryDAO.getInstance().loadRepo(currentRepo);
-        String url = "https://api.github.com/repos/" + repo.getName() + "/contributors";
-
-        JSONArray json;
+        User user = UserDAO.getInstance().loadUser(currentUser);
         try {
-            json = new JSONArray(getContent(url));
+            JSONArray json = sendGet();
             for (int i = 0; i < json.length(); i++) {
                 JSONObject userJSON = (JSONObject) json.get(i);
 
@@ -53,7 +60,7 @@ public class ColaboratorsService extends CommandService {
                 String userName = userJSON.getString("login");
                 String userType = userJSON.getString("type");
                 //String name = userJSON.getString("name");
-                RepositoryDAO.getInstance().addCollaborator(new User(id, userName, userType), repo);
+                UserDAO.getInstance().addFollower(new User(id, userName, userType), user);
             }
             System.gc();
         } catch (PageForbiddenException | NoRemainingRequestsException e) {

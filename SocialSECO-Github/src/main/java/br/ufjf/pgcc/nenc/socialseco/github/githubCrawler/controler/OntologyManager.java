@@ -27,10 +27,10 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.jena.ontology.DatatypeProperty;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.ObjectProperty;
 import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Resource;
 
 /**
@@ -40,9 +40,11 @@ import org.apache.jena.rdf.model.Resource;
 public class OntologyManager {
 
     private static Model instance;
-    private static HashMap<Integer, User> users = new HashMap<>();
-    private static HashMap<Integer, Repository> repos = new HashMap<>();
-    private static HashMap<Integer, Language> langs = new HashMap<>();
+    private HashMap<Integer, User> users = new HashMap<>();
+    private HashMap<Integer, Repository> repos = new HashMap<>();
+    private HashMap<Integer, Language> langs = new HashMap<>();
+    private Individual platform;
+    private ObjectProperty builtForPlatform;
 
     private static String baseURI = "http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#";
 
@@ -51,51 +53,86 @@ public class OntologyManager {
     public OntologyManager(String path, String fileName) {
         OntologyAccess oa = new OntologyAccess(path, fileName);
         ontModel = oa.getOntModel();
+
+        builtForPlatform = ontModel.getObjectProperty(baseURI + "builtForPlatform");
+
+        platform = ontModel.getIndividual(baseURI + "github");
+
     }
 
-    private void addUser(User user) {
+    private Individual addUser(User user) {
         if (!users.containsKey(user.getId())) {
             users.put(user.getId(), user);
-            createUser(user);
         }
+        return createUser(user);
     }
 
-    private void addRepository(Repository repo) {
+    private Individual addRepository(Repository repo) {
         if (!repos.containsKey(repo.getId())) {
             repos.put(repo.getId(), repo);
-            createRepository(repo);
         }
+        return createRepository(repo);
     }
 
-    private void addLanguage(Language lang) {
+    private Individual addLanguage(Language lang) {
         if (!langs.containsKey(lang.getId())) {
             langs.put(lang.getId(), lang);
         }
+        return createLanguage(lang);
     }
 
     private void addFollower(User currentUser, User follower) {
-        addUser(follower);
-        addUser(currentUser);
+        Individual indFollower = createUser(follower);
+        Individual indUser = createUser(currentUser);
+        if (indFollower != null && indUser != null) {
+            ObjectProperty follows = ontModel.getObjectProperty(baseURI + "follows");
+            indFollower.addProperty(follows, indUser);
+        }
     }
 
     private void addStargazer(Repository currentRepo, User follower) {
-        addUser(follower);
-        addRepository(currentRepo);
+        Individual indFollower = createUser(follower);
+        Individual indRepo = createRepository(currentRepo);
+        if (indFollower != null && indRepo != null) {
+            ObjectProperty follows = ontModel.getObjectProperty(baseURI + "follows");
+            indFollower.addProperty(follows, indRepo);
+        }
     }
 
     private void addOwnedRepo(User currentUser, Repository repo) {
-        addUser(currentUser);
-        addRepository(repo);
+        createUser(currentUser);
+        createRepository(repo);
+
     }
 
     private void addCollaborationRepo(User currentUser, Repository repo) {
-        addUser(currentUser);
-        addRepository(repo);
+        Individual indUser = createUser(currentUser);
+        Individual indRepo = createRepository(repo);
+        if (indUser != null && indRepo != null) {
+            ObjectProperty colaborates = ontModel.getObjectProperty(baseURI + "collaborates");
+            indUser.addProperty(colaborates, indRepo);
+
+            Individual software = ontModel.getIndividual(baseURI + repo.getURISuffix() + "+software");
+            indUser.addProperty(colaborates, software);
+            
+            software.addProperty(builtForPlatform, platform);
+        }
+
     }
 
     private void addCollaborator(Repository currentRepo, User collaborator) {
-        addRepository(currentRepo);
-        addUser(collaborator);
+        Individual indRepo = createRepository(currentRepo);
+        Individual indUser = createUser(collaborator);
+
+        if (indUser != null && indRepo != null) {
+            ObjectProperty colaborates = ontModel.getObjectProperty(baseURI + "collaborates");
+            indUser.addProperty(colaborates, indRepo);
+
+            Individual software = ontModel.getIndividual(baseURI + currentRepo.getURISuffix() + "+software");
+            indUser.addProperty(colaborates, software);
+            
+            software.addProperty(builtForPlatform, platform);
+        }
     }
 
     public static Model getInstance() {
@@ -122,24 +159,27 @@ public class OntologyManager {
         Queue<Repository> repoQueue = new LinkedList<>();
         userQueue.add(company);
         int iteractions = 0;
-        while ((!userQueue.isEmpty() || !repoQueue.isEmpty()) && iteractions < 3) {
+        while ((!userQueue.isEmpty() || !repoQueue.isEmpty()) && iteractions < 2) {
             iteractions++;
             for (User currentUser = userQueue.poll(); currentUser != null; currentUser = userQueue.poll()) {
+                System.out.println("Usuários: " + userQueue.size() + "/" + users.size() + " Repos: " + repoQueue.size() + "/" + repos.size());
                 addUser(currentUser);
 
                 //load followers
+                /*
                 List<User> followers = UserDAO.getInstance().loadFollowers(currentUser.getId());
                 for (User follower : followers) {
                     addFollower(currentUser, follower);
                     if (!users.containsKey(follower.getId())) {
+                        users.put(follower.getId(), follower);
                         auxUserQueue.add(follower);
                     }
-                }
-
+                }*/
                 List<Repository> ownedRepos = UserDAO.getInstance().loadOwnedRepositories(currentUser.getId());
                 for (Repository repo : ownedRepos) {
                     addOwnedRepo(currentUser, repo);
                     if (!repos.containsKey(repo.getId())) {
+                        repos.put(repo.getId(), repo);
                         repoQueue.add(repo);
                     }
                 }
@@ -148,6 +188,7 @@ public class OntologyManager {
                 for (Repository repo : collaborationRepos) {
                     addCollaborationRepo(currentUser, repo);
                     if (!repos.containsKey(repo.getId())) {
+                        repos.put(repo.getId(), repo);
                         repoQueue.add(repo);
                     }
                 }
@@ -158,17 +199,20 @@ public class OntologyManager {
             for (Repository currentRepo = repoQueue.poll(); currentRepo != null; currentRepo = repoQueue.poll()) {
 //load followers
                 addRepository(currentRepo);
-                List<User> stargazers = RepositoryDAO.getInstance().loadFollower(currentRepo.getId());
+                System.out.println("Usuários: " + userQueue.size() + "/" + users.size() + " Repos: " + repoQueue.size() + "/" + repos.size());
+                /*List<User> stargazers = RepositoryDAO.getInstance().loadFollower(currentRepo.getId());
                 for (User stargazer : stargazers) {
                     addStargazer(currentRepo, stargazer);
                     if (!users.containsKey(stargazer.getId())) {
+                        users.put(stargazer.getId(), stargazer);
                         userQueue.add(stargazer);
                     }
-                }
+                }*/
                 List<User> collaborators = RepositoryDAO.getInstance().loadCollaborator(currentRepo.getId());
                 for (User collaborator : collaborators) {
                     addCollaborator(currentRepo, collaborator);
                     if (!users.containsKey(collaborator.getId())) {
+                        users.put(collaborator.getId(), collaborator);
                         userQueue.add(collaborator);
                     }
                 }
@@ -176,44 +220,76 @@ public class OntologyManager {
         }
     }
 
-    public Individual createRepository(Repository repo) {
+    private Individual createRepository(Repository repo) {
+        if (repo == null) {
+            return null;
+        }
         Individual repository = ontModel.getIndividual(baseURI + repo.getURISuffix());
         if (repository == null) {
             Resource ontClassRepo = ontModel.getResource(baseURI + "Repository"); //a instância a ser criada pertence à classe Result
             Resource ontClassSoftware = ontModel.getResource(baseURI + "Solution"); //a instância a ser criada pertence à classe Result
-            Individual software = ontModel.createIndividual(baseURI + repo.getURISuffix()+"+software", ontClassSoftware);
+            Individual software = ontModel.createIndividual(baseURI + repo.getURISuffix() + "+software", ontClassSoftware);
             repository = ontModel.createIndividual(baseURI + repo.getURISuffix(), ontClassRepo);
 
             ObjectProperty hosts = ontModel.getObjectProperty(baseURI + "hosts");
             
+            software.addProperty(builtForPlatform, platform);
             repository.addProperty(hosts, software);
-            
-            for(Language lang: LanguageDAO.getInstance().getRepositoryLanguages(repo)){
-                Resource ontClassLang = ontModel.getResource(baseURI + "Skill");
-                Individual language = ontModel.createIndividual(baseURI + lang.getURISuffix(),ontClassLang);
+
+            for (Language lang : LanguageDAO.getInstance().getRepositoryLanguages(repo)) {
                 ObjectProperty needsSkill = ontModel.getObjectProperty(baseURI + "needsSkill");
-                software.addProperty(needsSkill, language);
+                software.addProperty(needsSkill, createLanguage(lang));
             }
-            
+
             User owner = UserDAO.getInstance().loadUser(repo.getOwner_id());
-            if(owner!=null && owner.getType().equals("Organization")){
-                Individual ontOwner = createUser(owner);
-                ontOwner.addOntClass(ontModel.getResource(baseURI + "Institution"));
+            Individual ontOwner = createUser(owner);
+            if (ontOwner != null) {
+                if (owner != null && owner.getType().equals("Organization")) {
+
+                    ontOwner.addOntClass(ontModel.getResource(baseURI + "Institution"));
+
+                    ObjectProperty property = ontModel.getObjectProperty(baseURI + "isHostedIn");
+                    software.addProperty(property, repository);
+                }
                 ObjectProperty develops = ontModel.getObjectProperty(baseURI + "develops");
                 ontOwner.addProperty(develops, software);
-               
             }
-            
-            
         }
         return repository;
     }
 
-    public Individual createUser(User user) {
+    private Individual createLanguage(Language lang) {
+        if (lang == null) {
+            return null;
+        }
+        Individual language = null;
+        try {
+            language = ontModel.getIndividual(baseURI + lang.getURISuffix());
+        } catch (Exception e) {
+
+        }
+        if (lang != null) {
+            Resource ontClassLang = ontModel.getResource(baseURI + "Skill");
+            language = ontModel.createIndividual(baseURI + lang.getURISuffix(), ontClassLang);
+        }
+        return language;
+    }
+
+    private Individual createUser(User user) {
+        if (user == null) {
+            return null;
+        }
         Individual ind = ontModel.getIndividual(baseURI + user.getUserName());
         if (ind == null) {
-            Resource ontClass = ontModel.getResource(baseURI + "Person"); //a instância a ser criada pertence à classe Result
-
+            Resource ontClass;
+            if (user.getType() == null) {
+                System.err.println("meu deus");
+            }
+            if (user.getType().equals("Organization")) {
+                ontClass = ontModel.getResource(baseURI + "Institution"); //a instância a ser criada pertence à classe Result
+            } else {
+                ontClass = ontModel.getResource(baseURI + "Person"); //a instância a ser criada pertence à classe Result
+            }
             return ontModel.createIndividual(baseURI + user.getUserName(), ontClass);
         } else {
             return ind;
@@ -236,6 +312,10 @@ public class OntologyManager {
     public void saveOntology() {
         OutputStream out;
         try {
+            Reasoner reasoner = ReasonerRegistry.getOWLReasoner();
+            reasoner = reasoner.bindSchema(ontModel);
+            OntModelSpec ontModelSpec = OntModelSpec.OWL_DL_MEM_TRANS_INF;
+            ontModelSpec.setReasoner(reasoner);
             out = new FileOutputStream("ssn_v1.rdf");
             ontModel.write(out, "RDF/XML-ABBREV");
             out.close();

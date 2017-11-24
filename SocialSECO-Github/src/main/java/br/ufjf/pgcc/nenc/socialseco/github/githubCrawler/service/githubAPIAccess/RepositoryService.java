@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service;
+package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess;
 
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.CommandService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.util.ParameterAccess;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.RepositoryDAO;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.Repository;
