@@ -9,7 +9,7 @@ package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao;
  *
  * @author marci
  */
-public class UserTypeDAO extends BasicDAO{
+public class UserTypeDAO extends BasicDAO {
 
     private static UserTypeDAO instance = null;
 
@@ -25,15 +25,17 @@ public class UserTypeDAO extends BasicDAO{
     }
 
     public String loadType(int id) {
-        open();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT * from user_type WHERE id = " + id);
 
             if (resultSet.next()) {
-                return resultSet.getString("type");
+                String value = resultSet.getString("type");
+                close();
+                return value;
 
             }
         } catch (Exception e) {
@@ -42,17 +44,19 @@ public class UserTypeDAO extends BasicDAO{
         close();
         return null;
     }
-    
+
     public int loadType(String type) {
-        open();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
-                    .executeQuery("SELECT * from user_type WHERE type LIKE '" + type+"'");
+                    .executeQuery("SELECT * from user_type WHERE type LIKE '" + type + "'");
 
             if (resultSet.next()) {
-                return resultSet.getInt("id");
+                int returnValue = resultSet.getInt("id");
+                close();
+                return returnValue;
 
             }
         } catch (Exception e) {
@@ -63,9 +67,9 @@ public class UserTypeDAO extends BasicDAO{
     }
 
     public int saveType(String type) {
-        if (loadType(type)==-1) {
-            open();
+        if (loadType(type) == -1) {
             try {
+                open();
                 // PreparedStatements can use variables and are more efficient
                 preparedStatement = connect
                         .prepareStatement("INSERT INTO user_type (id, type) VALUES (NULL, ?)");
@@ -77,9 +81,8 @@ public class UserTypeDAO extends BasicDAO{
                 close();
                 return -1;
             }
-            close();
         }
-
+        close();
         return loadType(type);
     }
 }

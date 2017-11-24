@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author marci
  */
-public class UserDAO extends BasicDAO{
+public class UserDAO extends BasicDAO {
 
     private static UserDAO instance = null;
 
@@ -30,16 +30,16 @@ public class UserDAO extends BasicDAO{
     }
 
     public User loadUser(int id) {
-        open();
         User user = null;
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT * from user WHERE id = " + id);
 
             if (resultSet.next()) {
-                user = new User(resultSet.getInt("id"),  resultSet.getString("username"), UserTypeDAO.getInstance().loadType(resultSet.getInt("user_type")));
+                user = new User(resultSet.getInt("id"), resultSet.getString("username"), UserTypeDAO.getInstance().loadType(resultSet.getInt("user_type")));
 
             }
         } catch (Exception e) {
@@ -51,8 +51,8 @@ public class UserDAO extends BasicDAO{
 
     public boolean saveUser(User user) {
         if (loadUser(user.getId()) == null) {
-            open();
             try {
+                open();
                 // PreparedStatements can use variables and are more efficient
                 preparedStatement = connect
                         .prepareStatement("insert into  user values (?, ?, ?)");
@@ -70,14 +70,14 @@ public class UserDAO extends BasicDAO{
             return true;
 
         }
-
+        close();
         return false;
     }
 
     public boolean updateUser(User user) {
         if (loadUser(user.getId()) != null) {
-            open();
             try {
+                open();
                 // PreparedStatements can use variables and are more efficient
                 preparedStatement = connect
                         .prepareStatement("UPDATE user  username=(?) WHERE id=(?)");
@@ -93,19 +93,22 @@ public class UserDAO extends BasicDAO{
             close();
             return true;
         }
+        close();
         return false;
     }
-    
+
     public int nextUser(int id) {
-        open();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT MIN(id) FROM user WHERE id > " + id);
 
             if (resultSet.next()) {
-                return resultSet.getInt(1);
+                int returnValue = resultSet.getInt(1);
+                close();
+                return returnValue;
 
             }
         } catch (Exception e) {
@@ -114,18 +117,21 @@ public class UserDAO extends BasicDAO{
         close();
         return 0;
     }
-    
+
     public List<User> loadFollowers(int id) {
-        open();
         List<User> collaborators = new ArrayList<>();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT follower_id from user_follower WHERE user_id = " + id);
-
+            User user = null;
             while (resultSet.next()) {
-                collaborators.add(UserDAO.getInstance().loadUser(resultSet.getInt("follower_id")));
+                user = UserDAO.getInstance().loadUser(resultSet.getInt("follower_id"));
+                if (user != null) {
+                    collaborators.add(user);
+                }
 
             }
         } catch (Exception e) {
@@ -144,36 +150,40 @@ public class UserDAO extends BasicDAO{
     }
 
     private boolean addFollower(int followerId, int userId) {
+        try {
             open();
-            try {
-                // PreparedStatements can use variables and are more efficient
-                preparedStatement = connect
-                        .prepareStatement("insert into  user_follower values (?, ?)");
-                // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
-                // Parameters start with 1
-                preparedStatement.setInt(1, userId);
-                preparedStatement.setInt(2, followerId);
-                preparedStatement.executeUpdate();
-            } catch (Exception e) {
-                close();
-                return false;
-            }
+            // PreparedStatements can use variables and are more efficient
+            preparedStatement = connect
+                    .prepareStatement("insert into  user_follower values (?, ?)");
+            // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+            // Parameters start with 1
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, followerId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
             close();
-            return true;
-      
+            return false;
+        }
+        close();
+        return true;
+
     }
-    
+
     public List<Repository> loadOwnedRepositories(int id) {
-        open();
         List<Repository> ownedRepos = new ArrayList<>();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT id from repository WHERE owner_id = " + id);
 
+            Repository repo = null;
             while (resultSet.next()) {
-                ownedRepos.add(RepositoryDAO.getInstance().loadRepo(resultSet.getInt("id")));
+                repo = RepositoryDAO.getInstance().loadRepo(resultSet.getInt("id"));
+                if (repo != null) {
+                    ownedRepos.add(repo);
+                }
 
             }
         } catch (Exception e) {
@@ -182,18 +192,22 @@ public class UserDAO extends BasicDAO{
         close();
         return ownedRepos;
     }
-    
+
     public List<Repository> loadCollaborationRepositories(int id) {
-        open();
         List<Repository> collaborationsRepos = new ArrayList<>();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT id_repository from repo_colaborator WHERE id_user = " + id);
 
+            Repository repo = null;
             while (resultSet.next()) {
-                collaborationsRepos.add(RepositoryDAO.getInstance().loadRepo(resultSet.getInt("id_repository")));
+                repo = RepositoryDAO.getInstance().loadRepo(resultSet.getInt("id_repository"));
+                if (repo != null) {
+                    collaborationsRepos.add(repo);
+                }
 
             }
         } catch (Exception e) {

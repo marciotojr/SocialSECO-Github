@@ -29,19 +29,22 @@ public class LanguageDAO extends BasicDAO {
     }
 
     public int loadLanguage(String name) {
-        open();
+        
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT * from language WHERE name LIKE '" + name + "'");
 
             if (resultSet.next()) {
-                return resultSet.getInt("id");
+                int value = resultSet.getInt("id");;
+                close();
+                return value;
 
             }
         } catch (Exception e) {
-
+close();
         }
         close();
         return -1;
@@ -50,8 +53,8 @@ public class LanguageDAO extends BasicDAO {
     public int saveLanguage(String name) {
         int langCode = loadLanguage(name);
         if (langCode == -1) {
-            open();
             try {
+                open();
                 // PreparedStatements can use variables and are more efficient
                 preparedStatement = connect
                         .prepareStatement("INSERT INTO language (id, name) VALUES (NULL, ?)");
@@ -66,25 +69,27 @@ public class LanguageDAO extends BasicDAO {
             close();
             return loadLanguage(name);
         } else {
+            close();
             return langCode;
         }
 
     }
 
     public String loadLanguage(int id) {
-        open();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT * from language WHERE id =" + id);
 
             if (resultSet.next()) {
-                return resultSet.getString(2);
+                String returnValue = resultSet.getString(2);
+                close();
+                return returnValue;
 
             }
         } catch (Exception e) {
-
         }
         close();
         return null;
@@ -92,21 +97,21 @@ public class LanguageDAO extends BasicDAO {
 
     public Language[] getRepositoryLanguages(Repository repo) {
         ArrayList<Language> list = new ArrayList<>();
-        open();
         try {
+            open();
             statement = connect.createStatement();
-            
+
             resultSet = statement
                     .executeQuery("SELECT l.name FROM repo_language rl \n"
                             + "INNER JOIN repository r ON rl.id_repo=r.id\n"
                             + "INNER JOIN language l ON rl.id_lang=l.id\n"
-                            + "WHERE r.id="+repo.getId());
+                            + "WHERE r.id=" + repo.getId());
 
             while (resultSet.next()) {
                 list.add(new Language(resultSet.getString(1)));
             }
         } catch (Exception e) {
-
+close();
         }
         close();
         Language[] arr = new Language[list.size()];

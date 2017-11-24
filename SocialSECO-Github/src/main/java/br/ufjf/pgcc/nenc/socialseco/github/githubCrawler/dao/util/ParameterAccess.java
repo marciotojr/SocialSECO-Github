@@ -5,7 +5,7 @@
  */
 package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.util;
 
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.RepositoryService;
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.RepositoryService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

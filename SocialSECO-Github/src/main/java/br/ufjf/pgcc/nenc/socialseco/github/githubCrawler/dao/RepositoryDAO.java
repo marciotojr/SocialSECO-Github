@@ -31,9 +31,9 @@ public class RepositoryDAO extends BasicDAO {
     }
 
     public Repository loadRepo(int id) {
-        open();
         Repository repo = null;
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
@@ -48,15 +48,15 @@ public class RepositoryDAO extends BasicDAO {
         close();
         return repo;
     }
-    
+
     public Repository loadRepo(String name) {
-        open();
         Repository repo = null;
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
-                    .executeQuery("SELECT * from repository WHERE name LIKE '" + name+"'");
+                    .executeQuery("SELECT * from repository WHERE name LIKE '" + name + "'");
 
             if (resultSet.next()) {
                 repo = new Repository(resultSet.getInt("id"), resultSet.getInt("owner_id"), resultSet.getString("name"));
@@ -70,8 +70,8 @@ public class RepositoryDAO extends BasicDAO {
 
     public boolean saveRepo(Repository repo) {
         if (loadRepo(repo.getId()) == null) {
-            open();
             try {
+                open();
                 // PreparedStatements can use variables and are more efficient
                 preparedStatement = connect
                         .prepareStatement("insert into  repository values (?, ?,?)");
@@ -89,14 +89,14 @@ public class RepositoryDAO extends BasicDAO {
             return true;
 
         }
-
+        close();
         return false;
     }
 
     public boolean updateRepo(Repository repo) {
         if (loadRepo(repo.getId()) != null) {
-            open();
             try {
+                open();
                 // PreparedStatements can use variables and are more efficient
                 preparedStatement = connect
                         .prepareStatement("UPDATE repository SET owner_id=(?) , name=(?) WHERE id=(?)");
@@ -113,24 +113,31 @@ public class RepositoryDAO extends BasicDAO {
             close();
             return true;
         }
+        close();
         return false;
     }
 
     public int nextRepo(int currentRepo) {
-        open();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT MIN(id) from repository WHERE id > " + currentRepo);
 
             if (resultSet.next()) {
-                return resultSet.getInt(1);
+                int returnValue = resultSet.getInt(1);
+                close();
+                return returnValue;
 
             } else {
+                close();
+
                 return nextRepo(-1);
             }
         } catch (Exception e) {
+            close();
+
             return nextRepo(-1);
         }
     }
@@ -140,8 +147,8 @@ public class RepositoryDAO extends BasicDAO {
     }
 
     public boolean addLanguage(int repo, int lang, int loc) {
-        open();
         try {
+            open();
             // PreparedStatements can use variables and are more efficient
             preparedStatement = connect
                     .prepareStatement("insert into  repo_language values (?, ?,?)");
@@ -159,18 +166,21 @@ public class RepositoryDAO extends BasicDAO {
         return true;
 
     }
-    
+
     public List<User> loadCollaborator(int id) {
-        open();
         List<User> collaborators = new ArrayList<>();
         try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT id_user from repo_colaborator WHERE id_repository = " + id);
-
+            User userAux = null;
             while (resultSet.next()) {
-                collaborators.add(UserDAO.getInstance().loadUser(resultSet.getInt("id_user")));
+                userAux = UserDAO.getInstance().loadUser(resultSet.getInt("id_user"));
+                if (userAux != null) {
+                    collaborators.add(userAux);
+                }
 
             }
         } catch (Exception e) {
@@ -189,37 +199,39 @@ public class RepositoryDAO extends BasicDAO {
     }
 
     private boolean addCollaborator(int userId, int repositoryId) {
-            open();
-            try {
-                // PreparedStatements can use variables and are more efficient
-                preparedStatement = connect
-                        .prepareStatement("insert into  repo_colaborator values (?, ?)");
-                // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
-                // Parameters start with 1
-                preparedStatement.setInt(1, repositoryId);
-                preparedStatement.setInt(2, userId);
-                preparedStatement.executeUpdate();
-            } catch (Exception e) {
-                close();
-                return false;
-            }
-            close();
-            return true;
-      
-    }
-    
-    public List<User> loadFollower(int id) {
-        open();
-        List<User> collaborators = new ArrayList<>();
-        User user = null;
         try {
+            open();
+            // PreparedStatements can use variables and are more efficient
+            preparedStatement = connect
+                    .prepareStatement("insert into  repo_colaborator values (?, ?)");
+            // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+            // Parameters start with 1
+            preparedStatement.setInt(1, repositoryId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            close();
+            return false;
+        }
+        close();
+        return true;
+
+    }
+
+    public List<User> loadFollower(int id) {
+        List<User> collaborators = new ArrayList<>();
+        try {
+            open();
             statement = connect.createStatement();
 
             resultSet = statement
                     .executeQuery("SELECT id_user from repo_follower WHERE id_repository = " + id);
-
+            User user = null;
             while (resultSet.next()) {
-                collaborators.add(UserDAO.getInstance().loadUser(resultSet.getInt("id_user")));
+                user = UserDAO.getInstance().loadUser(resultSet.getInt("id_user"));
+                if (user != null) {
+                    collaborators.add(user);
+                }
 
             }
         } catch (Exception e) {
@@ -238,25 +250,23 @@ public class RepositoryDAO extends BasicDAO {
     }
 
     private boolean addFollower(int userId, int repositoryId) {
+        try {
             open();
-            try {
-                // PreparedStatements can use variables and are more efficient
-                preparedStatement = connect
-                        .prepareStatement("insert into  repo_follower values (?, ?)");
-                // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
-                // Parameters start with 1
-                preparedStatement.setInt(1, repositoryId);
-                preparedStatement.setInt(2, userId);
-                preparedStatement.executeUpdate();
-            } catch (Exception e) {
-                close();
-                return false;
-            }
+            // PreparedStatements can use variables and are more efficient
+            preparedStatement = connect
+                    .prepareStatement("insert into  repo_follower values (?, ?)");
+            // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+            // Parameters start with 1
+            preparedStatement.setInt(1, repositoryId);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
             close();
-            return true;
-      
-    }
-    
+            return false;
+        }
+        close();
+        return true;
 
+    }
 
 }
