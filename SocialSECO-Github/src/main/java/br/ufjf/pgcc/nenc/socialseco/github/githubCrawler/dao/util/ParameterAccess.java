@@ -48,13 +48,16 @@ public class ParameterAccess {
 
             if (resultSet.next()) {
                 paramValue = resultSet.getString(1);
+                close();
                 return paramValue;
             } else {
-                return null;
+                close();
+                return "";
             }
 
         } catch (Exception e) {
-            return null;
+            close();
+            return "";
         } finally {
             close();
         }
