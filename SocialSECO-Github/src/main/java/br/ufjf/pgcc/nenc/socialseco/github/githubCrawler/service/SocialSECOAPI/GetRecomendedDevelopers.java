@@ -47,7 +47,7 @@ public class GetRecomendedDevelopers {
         }
         ArrayList<Person> hasAllSkills = new ArrayList<>();
         ArrayList<Person> hasSomeSkills = new ArrayList<>();
-        ArrayList<Person> hasSomeInterests = new ArrayList<>();
+        //ArrayList<Person> hasSomeInterests = new ArrayList<>();
         for (Person person : people) {
             setSkills(person, model);
             setInterests(person, model);
@@ -87,7 +87,7 @@ public class GetRecomendedDevelopers {
             } else if (matchRequiredSkills) {
                 hasSomeSkills.add(person);
             } else if (matchInterestedSkills) {
-                hasSomeInterests.add(person);
+                //hasSomeInterests.add(person);
             }
         }
 
@@ -130,7 +130,7 @@ public class GetRecomendedDevelopers {
             }
             JSONObject jPerson = new JSONObject().put("username", person.getSelf().toString().substring(person.getSelf().toString().indexOf('#'), person.getSelf().toString().length() - 2));
             jHasSomeSkills.put(jPerson);
-        }
+        }/*
         JSONArray jHasSomeInterests = new JSONArray();
         for (Person person : hasSomeInterests) {
             JSONArray jKnownSkills = new JSONArray();
@@ -143,10 +143,10 @@ public class GetRecomendedDevelopers {
             }
             JSONObject jPerson = new JSONObject().put("username", person.getSelf().toString().substring(person.getSelf().toString().indexOf('#'), person.getSelf().toString().length() - 2));
             jHasSomeInterests.put(jPerson);
-        }
+        }*/
         jOutput.put("HaveAllSkills", jHasAllSkills);
         jOutput.put("HaveSomeSkills", jHasSomeSkills);
-        jOutput.put("HaveSomeInterest", jHasSomeInterests);
+        //jOutput.put("HaveSomeInterest", jHasSomeInterests);
         return jOutput.toString();
     }
 

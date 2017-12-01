@@ -48,7 +48,7 @@ public class OntologyManager {
     private static String baseURI = "http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#";
 
     private OntModel ontModel;
-
+        
     public OntologyManager(String path, String fileName) {
         OntologyAccess oa = new OntologyAccess(path, fileName);
         ontModel = oa.getOntModel();
@@ -289,10 +289,7 @@ public class OntologyManager {
         Individual ind = ontModel.getIndividual(baseURI + user.getUserName());
         if (ind == null) {
             Resource ontClass;
-            if (user.getType() == null) {
-                System.err.println("meu deus");
-            }
-            if (user.getType().equals("Organization")) {
+            if (user.getType() != null && user.getType().equals("Organization")) {
                 ontClass = ontModel.getResource(baseURI + "Institution"); //a instância a ser criada pertence à classe Result
             } else {
                 ontClass = ontModel.getResource(baseURI + "Person"); //a instância a ser criada pertence à classe Result
@@ -316,14 +313,14 @@ public class OntologyManager {
          */
     }
 
-    public void saveOntology() {
+    public void saveOntology(String fileName) {
         OutputStream out;
         try {
             Reasoner reasoner = ReasonerRegistry.getOWLReasoner();
             reasoner = reasoner.bindSchema(ontModel);
             OntModelSpec ontModelSpec = OntModelSpec.OWL_DL_MEM_TRANS_INF;
             ontModelSpec.setReasoner(reasoner);
-            out = new FileOutputStream("ssn_v1.rdf");
+            out = new FileOutputStream(fileName);
             ontModel.write(out, "RDF/XML-ABBREV");
             out.close();
         } catch (FileNotFoundException ex) {

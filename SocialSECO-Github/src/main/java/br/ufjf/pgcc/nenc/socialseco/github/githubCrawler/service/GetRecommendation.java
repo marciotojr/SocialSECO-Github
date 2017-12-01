@@ -5,6 +5,7 @@
  */
 package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service;
 
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.GetIntitutionsInEcosystem;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.GetRecomendedDevelopers;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -63,5 +64,13 @@ public class GetRecommendation {
         GetRecomendedDevelopers gi = new GetRecomendedDevelopers();
         return gi.getRecomendedDevelopers(user,repository);
         
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getInstitutions/{user}/")
+    public String getInstitutions(@PathParam("user") String user)throws MalformedURLException, UnsupportedEncodingException, IOException {
+        GetIntitutionsInEcosystem gi = new GetIntitutionsInEcosystem();
+        return gi.getInstitutions(user);
     }
 }

@@ -39,7 +39,7 @@ public class Main {
             Thread languagesThread = new Thread(ls, "languages");
             OntologyManager om = new OntologyManager("C:", "social-network.owl");
             GetRecomendedDevelopers gi = new GetRecomendedDevelopers();
-            System.out.println(gi.getRecomendedDevelopers("adamwiggins","sinatra"));/*
+            System.out.println(gi.getRecomendedDevelopers("railslove","railslove_deploy"));/*
             om.createUser(new User(0, "marcio", null));
             om.createRepository(new Repository(27, 0, "marcio/eseco"));
             om.createRepository(new Repository(28, 0, "marcio/github"));
