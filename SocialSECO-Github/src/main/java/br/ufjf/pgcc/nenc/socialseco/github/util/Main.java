@@ -1,8 +1,7 @@
 package br.ufjf.pgcc.nenc.socialseco.github.util;
 
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.controler.OntologyManager;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.Repository;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.User;
+import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.GetRecomendedDevelopers;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.ColaboratorsService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.LanguageService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.RepositoryFollowerService;
@@ -11,7 +10,6 @@ import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.UserService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.JSONArray;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -39,19 +37,21 @@ public class Main {
             Thread stargazersThread = new Thread(rfs, "stargazers");
             Thread followersThread = new Thread(ufs, "follower");
             Thread languagesThread = new Thread(ls, "languages");
-            OntologyManager om = new OntologyManager("C:", "social-network.owl");/*
+            OntologyManager om = new OntologyManager("C:", "social-network.owl");
+            GetRecomendedDevelopers gi = new GetRecomendedDevelopers();
+            System.out.println(gi.getRecomendedDevelopers("adamwiggins","sinatra"));/*
             om.createUser(new User(0, "marcio", null));
             om.createRepository(new Repository(27, 0, "marcio/eseco"));
             om.createRepository(new Repository(28, 0, "marcio/github"));
             om.createRepository(new Repository(273, 81, "engineyard/eycap"));*/
-            om.loadCompanyCluster(81);
-            om.saveOntology();
-            //languagesThread.start();
-            //collaboratorsThread.start();
-            //followersThread.start();
-            //stargazersThread.start();
-            //userThread.start();
-            //repoThread.start();
+            /*om.loadCompanyCluster(81);
+            om.saveOntology();*/
+            /*languagesThread.start();
+            collaboratorsThread.start();
+            followersThread.start();
+            stargazersThread.start();
+            userThread.start();
+            repoThread.start();*/
             /*
             ParameterAccess pa = ParameterAccess.getInstance();
             System.out.println(pa.getParameter("exemplo"));

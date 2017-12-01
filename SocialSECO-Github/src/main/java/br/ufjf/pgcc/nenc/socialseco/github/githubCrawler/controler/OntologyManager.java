@@ -13,25 +13,24 @@ import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.Language;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.Repository;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.model.User;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.util.FileManager;
-import org.apache.jena.reasoner.Reasoner;
-import org.apache.jena.reasoner.ReasonerRegistry;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.ObjectProperty;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.reasoner.Reasoner;
+import org.apache.jena.reasoner.ReasonerRegistry;
+import org.apache.jena.util.FileManager;
 
 /**
  *
@@ -114,7 +113,7 @@ public class OntologyManager {
 
             Individual software = ontModel.getIndividual(baseURI + repo.getURISuffix() + "+software");
             indUser.addProperty(colaborates, software);
-            
+
             software.addProperty(builtForPlatform, platform);
         }
 
@@ -130,7 +129,7 @@ public class OntologyManager {
 
             Individual software = ontModel.getIndividual(baseURI + currentRepo.getURISuffix() + "+software");
             indUser.addProperty(colaborates, software);
-            
+
             software.addProperty(builtForPlatform, platform);
         }
     }
@@ -152,7 +151,7 @@ public class OntologyManager {
         return instance;
     }
 
-    public void loadCompanyCluster(int companyID) {
+    public OntModel loadUserCluster(int companyID) {
         User company = UserDAO.getInstance().loadUser(companyID);
         Queue<User> userQueue = new LinkedList<>();
         Queue<User> auxUserQueue = new LinkedList<>();
@@ -218,6 +217,7 @@ public class OntologyManager {
                 }
             }
         }
+        return ontModel;
     }
 
     private Individual createRepository(Repository repo) {
@@ -232,19 +232,26 @@ public class OntologyManager {
             repository = ontModel.createIndividual(baseURI + repo.getURISuffix(), ontClassRepo);
 
             ObjectProperty hosts = ontModel.getObjectProperty(baseURI + "hosts");
-            
+
             software.addProperty(builtForPlatform, platform);
             repository.addProperty(hosts, software);
 
+            Individual role = null;
+            Resource ontClassRole = ontModel.getResource(baseURI + "Role"); //a instância a ser criada pertence à classe Result
+
             for (Language lang : LanguageDAO.getInstance().getRepositoryLanguages(repo)) {
+                if (role == null) {
+                    role = ontModel.createIndividual(baseURI + repo.getURISuffix() + "-developer", ontClassRole);
+                }
                 ObjectProperty needsSkill = ontModel.getObjectProperty(baseURI + "needsSkill");
                 software.addProperty(needsSkill, createLanguage(lang));
+                role.addProperty(needsSkill, createLanguage(lang));
             }
 
             User owner = UserDAO.getInstance().loadUser(repo.getOwner_id());
             Individual ontOwner = createUser(owner);
-            if (ontOwner != null) {
-                if (owner != null && owner.getType().equals("Organization")) {
+            if (ontOwner != null && owner != null && owner.getType() != null) {
+                if (owner.getType().equals("Organization")) {
 
                     ontOwner.addOntClass(ontModel.getResource(baseURI + "Institution"));
 

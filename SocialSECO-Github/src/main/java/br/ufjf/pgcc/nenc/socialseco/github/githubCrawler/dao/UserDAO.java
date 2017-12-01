@@ -48,6 +48,26 @@ public class UserDAO extends BasicDAO {
         close();
         return user;
     }
+    
+    public User loadUser(String userName) {
+        User user = null;
+        try {
+            open();
+            statement = connect.createStatement();
+
+            resultSet = statement
+                    .executeQuery("SELECT * from user WHERE username LIKE '" + userName+"'");
+
+            if (resultSet.next()) {
+                user = new User(resultSet.getInt("id"), resultSet.getString("username"), UserTypeDAO.getInstance().loadType(resultSet.getInt("user_type")));
+
+            }
+        } catch (Exception e) {
+
+        }
+        close();
+        return user;
+    }
 
     public boolean saveUser(User user) {
         if (loadUser(user.getId()) == null) {
