@@ -43,7 +43,7 @@ public class RepositoryDAO extends BasicDAO {
                 repo = new Repository(resultSet.getInt("id"), resultSet.getInt("owner_id"), resultSet.getString("name"));
             }
         } catch (Exception e) {
-
+            close();
         }
         close();
         return repo;
@@ -62,7 +62,7 @@ public class RepositoryDAO extends BasicDAO {
                 repo = new Repository(resultSet.getInt("id"), resultSet.getInt("owner_id"), resultSet.getString("name"));
             }
         } catch (Exception e) {
-
+            close();
         }
         close();
         return repo;

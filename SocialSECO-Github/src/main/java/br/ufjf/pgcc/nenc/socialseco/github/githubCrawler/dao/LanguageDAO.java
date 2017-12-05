@@ -90,6 +90,7 @@ close();
 
             }
         } catch (Exception e) {
+            close();
         }
         close();
         return null;

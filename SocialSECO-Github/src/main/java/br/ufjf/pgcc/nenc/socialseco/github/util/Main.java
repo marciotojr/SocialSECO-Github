@@ -37,7 +37,7 @@ public class Main {
             Thread stargazersThread = new Thread(rfs, "stargazers");
             Thread followersThread = new Thread(ufs, "follower");
             Thread languagesThread = new Thread(ls, "languages");
-            OntologyManager om = new OntologyManager("C:", "social-network.owl");
+            /*OntologyManager om = new OntologyManager("C:", "social-network.owl");
             GetRecomendedDevelopers gi = new GetRecomendedDevelopers();
             System.out.println(gi.getRecomendedDevelopers("railslove","railslove_deploy"));/*
             om.createUser(new User(0, "marcio", null));
@@ -46,12 +46,12 @@ public class Main {
             om.createRepository(new Repository(273, 81, "engineyard/eycap"));*/
             /*om.loadCompanyCluster(81);
             om.saveOntology();*/
-            /*languagesThread.start();
+            languagesThread.start();
             collaboratorsThread.start();
             followersThread.start();
             stargazersThread.start();
             userThread.start();
-            repoThread.start();*/
+            repoThread.start();/*/
             /*
             ParameterAccess pa = ParameterAccess.getInstance();
             System.out.println(pa.getParameter("exemplo"));
