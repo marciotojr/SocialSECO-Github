@@ -1,0 +1,938 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/untitled-ontology-17#"
+     xml:base="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/untitled-ontology-17"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:developer_s-social-network="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#belongsTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#belongsTo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtFor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtFor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForPlatform -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForPlatform">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtFor"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Component"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Solution"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForSolution -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForSolution">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtFor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Component"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Solution"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#collaborates -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#collaborates">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#collaborates"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isHostedIn"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#containsEntity -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#containsEntity">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPartOfNetwork"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#containsMessage -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#containsMessage">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isSentThrough"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#containsReply -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#containsReply">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Post"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Reply"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isDevelopedBy"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#follows -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#follows">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasPlatform"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SoftwareEcosystem"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEmployee -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEmployee">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#worksAt"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasInterestIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasInterestIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#follows"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#requiresSkill"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#postsOn"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isAboutSkill"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SoftwareEcosystem"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasPlatform -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasPlatform">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasRole -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasRole">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSkill -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSkill">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#needsSkill"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasRole"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#needsSkill"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSkilledPersonnelIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSkilledPersonnelIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSpace -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSpace">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hosts -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hosts">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isHostedIn"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isAboutSkill -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isAboutSkill">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isDevelopedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isDevelopedBy">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isHostedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isHostedIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isKeystoneOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isKeystoneOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SoftwareEcosystem"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isNeededBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isNeededBy">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#needsSkill"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isNichePlayerOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isNichePlayerOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SoftwareEcosystem"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForPlatform"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPartOfConsortium -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPartOfConsortium">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Consortium"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPartOfNetwork -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPartOfNetwork">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForPlatform"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtFor"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hosts"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtFor"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#worksAt"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtFor"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#worksAt"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasEcosystem"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPostedOn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPostedOn">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isSentThrough -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isSentThrough"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#mayWork -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#mayWork">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSkill"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isNeededBy"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#needsSkill -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#needsSkill">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#postsA -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#postsA">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#postsOn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#postsOn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#postsA"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isPostedOn"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#requiresSkill -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#requiresSkill">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hosts"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#needsSkill"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#worksAt -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#worksAt">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isDevelopedBy"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#worksWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#worksWith">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasId -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasId">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Chat -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Chat">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Forum"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#ChatMessage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#ChatMessage">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Company -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Company">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Component -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Component">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForSolution"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Solution"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Consortium -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Consortium">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#FOSSFoundation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#FOSSFoundation">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Forum -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Forum">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Company"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Consortium"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#FOSSFoundation"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#InstitutionRole -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#InstitutionRole">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Keystone"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#NichePlayer"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Keystone -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Keystone">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#InstitutionRole"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#NichePlayer -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#NichePlayer">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForPlatform"/>
+                                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#InstitutionRole"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasRole"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasSkill"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Post -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Post">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Reply -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Reply">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Repository">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hosts"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#needsSkill"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Chat"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Forum"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SoftwareEcosystem -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SoftwareEcosystem">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasPlatform"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#hasNetwork"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Solution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Solution">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#builtForPlatform"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Platform"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#github -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#github"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#githubCompany -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#githubCompany">
+        <developer_s-social-network:develops rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#github"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#githubEcosystem -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#githubEcosystem">
+        <developer_s-social-network:hasNetwork rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#githubNetwork"/>
+        <developer_s-social-network:hasPlatform rdf:resource="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#github"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#githubNetwork -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#githubNetwork"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#ChatMessage"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Post"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Reply"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Company"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Consortium"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#FOSSFoundation"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Institution"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Person"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Message"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Role"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SharedSpace"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Skill"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SocialNetwork"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#Software"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#SoftwareEcosystem"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
