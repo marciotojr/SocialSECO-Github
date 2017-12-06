@@ -6,7 +6,6 @@
 package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI;
 
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.controler.OntologyManager;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.RepositoryDAO;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.UserDAO;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.model.Person;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.model.Role;
@@ -45,30 +44,54 @@ public class GetRecomendedDevelopers {
         if (people.size() == 0) {
             return "[]";
         }
-        ArrayList<Person> hasAllSkills = new ArrayList<>();
-        ArrayList<Person> hasSomeSkills = new ArrayList<>();
+
+        JSONArray jRequiredSkills = new JSONArray();
+        JSONObject jRoleInfo = new JSONObject();
+        for (Skill skill
+                : role.getInterest()) {
+            JSONObject jSkill = new JSONObject();
+            jSkill.put("Skill", skill.getSelf().toString().substring(skill.getSelf().toString().indexOf('#')+1));
+            jRequiredSkills.put(jSkill);
+        }
+
+        JSONObject jOutput = new JSONObject();
+        jRoleInfo.put("RequiredSkill", jRequiredSkills);
+        jRoleInfo.put("URI", role.getSelf().toString());
+        jOutput.put("Role", jRoleInfo);
+
+        JSONArray jHasAllSkills = new JSONArray();
+        JSONArray jHasSomeSkills = new JSONArray();
+
         //ArrayList<Person> hasSomeInterests = new ArrayList<>();
         for (Person person : people) {
+            ArrayList<Skill> extraSkills;
+            ArrayList<Skill> lackingSkills;
+
+            lackingSkills = new ArrayList<>();
+            for (Skill skill : role.getInterest()) {
+                lackingSkills.add(skill);
+            }
+            extraSkills = new ArrayList<>();
+
             setSkills(person, model);
             setInterests(person, model);
-            boolean matchAllRequiredSkills = true;
-            boolean matchRequiredSkills = false;
-            boolean matchInterestedSkills = false;
-            for (Skill requiredByRole : role.getInterest()) {
+
+            for (Skill knwon : person.getKnown()) {
 
                 //Verify skill
-                boolean foundSkill = false;
-                for (Skill skillKnown : person.getKnown()) {
-                    if (skillKnown.toString().equals(requiredByRole.toString())) {
-                        foundSkill = true;
-                        matchRequiredSkills = true;
+                boolean meetsCurrent = false;
+                for (Skill required : lackingSkills) {
+                    if (required.toString().equals(knwon.toString())) {
+                        lackingSkills.remove(required);
+                        meetsCurrent = true;
                         break;
                     }
                 }
-                if (!foundSkill) {
-                    matchAllRequiredSkills = false;
+                if (!meetsCurrent) {
+                    extraSkills.add(knwon);
                 }
 
+                /*
                 //Verify possible interest
                 boolean foundInterest = false;
                 for (Skill skillKnown : person.getKnown()) {
@@ -80,70 +103,32 @@ public class GetRecomendedDevelopers {
                 }
                 if (!foundInterest) {
                     removeSkill(person, requiredByRole);
+                }*/
+            }
+
+            if (lackingSkills.isEmpty()) {
+                JSONArray jExtraSkills = new JSONArray();
+                for (Skill skill : extraSkills) {
+                    jExtraSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
                 }
-            }
-            if (matchAllRequiredSkills) {
-                hasAllSkills.add(person);
-            } else if (matchRequiredSkills) {
-                hasSomeSkills.add(person);
-            } else if (matchInterestedSkills) {
-                //hasSomeInterests.add(person);
+                JSONObject jPerson = new JSONObject().put("username", person.getSelf().toString().substring(person.getSelf().toString().indexOf('#')+1));
+                jPerson.put("ExtraSkills", jExtraSkills);
+                jHasAllSkills.put(jPerson);
+            } else if (lackingSkills.size() < role.getInterest().size()) {
+                JSONArray jLackingSkills = new JSONArray();
+                for (Skill skill : lackingSkills) {
+                    jLackingSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
+                }
+                JSONArray jExtraSkills = new JSONArray();
+                for (Skill skill : extraSkills) {
+                    jExtraSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
+                }
+                JSONObject jPerson = new JSONObject().put("username", person.getSelf().toString().substring(person.getSelf().toString().indexOf('#')+1));
+                jPerson.put("ExtraSkills", jExtraSkills);
+                jPerson.put("LackingSkills", jLackingSkills);
+                jHasSomeSkills.put(jPerson);
             }
         }
-
-        JSONArray jRequiredSkills = new JSONArray();
-        JSONArray jRoleInfo = new JSONArray();
-        for (Skill skill
-                : role.getInterest()) {
-            JSONObject jSkill = new JSONObject();
-            jSkill.put("Skill", skill.getSelf().toString());
-            jRequiredSkills.put(jSkill);
-        }
-
-        JSONObject jOutput = new JSONObject();
-        jRoleInfo.put(new JSONObject().put("RequiredSkill", jRequiredSkills));
-        jRoleInfo.put(new JSONObject().put("URI", role.getSelf().toString()));
-        jOutput.put("Role", jRoleInfo);
-
-        JSONArray jHasAllSkills = new JSONArray();
-        for (Person person : hasAllSkills) {
-            JSONArray jKnownSkills = new JSONArray();
-            JSONArray jInterestedSkills = new JSONArray();
-            for (Skill skill : person.getKnown()) {
-                jKnownSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
-            }
-            for (Skill skill : person.getInterest()) {
-                jInterestedSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
-            }
-            JSONObject jPerson = new JSONObject().put("username", person.getSelf().toString().substring(person.getSelf().toString().indexOf('#'), person.getSelf().toString().length() - 2));
-            jHasAllSkills.put(jPerson);
-        }
-        JSONArray jHasSomeSkills = new JSONArray();
-        for (Person person : hasSomeSkills) {
-            JSONArray jKnownSkills = new JSONArray();
-            JSONArray jInterestedSkills = new JSONArray();
-            for (Skill skill : person.getKnown()) {
-                jKnownSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
-            }
-            for (Skill skill : person.getInterest()) {
-                jInterestedSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
-            }
-            JSONObject jPerson = new JSONObject().put("username", person.getSelf().toString().substring(person.getSelf().toString().indexOf('#'), person.getSelf().toString().length() - 2));
-            jHasSomeSkills.put(jPerson);
-        }/*
-        JSONArray jHasSomeInterests = new JSONArray();
-        for (Person person : hasSomeInterests) {
-            JSONArray jKnownSkills = new JSONArray();
-            JSONArray jInterestedSkills = new JSONArray();
-            for (Skill skill : person.getKnown()) {
-                jKnownSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
-            }
-            for (Skill skill : person.getInterest()) {
-                jInterestedSkills.put(new JSONObject().put("URI", skill.getSelf().toString()));
-            }
-            JSONObject jPerson = new JSONObject().put("username", person.getSelf().toString().substring(person.getSelf().toString().indexOf('#'), person.getSelf().toString().length() - 2));
-            jHasSomeInterests.put(jPerson);
-        }*/
         jOutput.put("HaveAllSkills", jHasAllSkills);
         jOutput.put("HaveSomeSkills", jHasSomeSkills);
         //jOutput.put("HaveSomeInterest", jHasSomeInterests);
