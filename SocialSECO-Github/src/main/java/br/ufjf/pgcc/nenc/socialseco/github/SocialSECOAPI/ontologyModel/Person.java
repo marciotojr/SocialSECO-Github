@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.model;
+package br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.ontologyModel;
 
 import java.util.ArrayList;
 import org.apache.jena.rdf.model.RDFNode;
@@ -12,25 +12,14 @@ import org.apache.jena.rdf.model.RDFNode;
  *
  * @author Marcio Júnior
  */
-public class Person {
-    RDFNode self;
+public class Person extends Thing{
     ArrayList<Skill> interest;
     ArrayList<Skill> known;
 
     public Person(RDFNode self) {
-        this.self = self;
+        super(self);
         interest = new ArrayList<>();
         known = new ArrayList<>();
-    }
-    
-    
-
-    public RDFNode getSelf() {
-        return self;
-    }
-
-    public void setSelf(RDFNode self) {
-        this.self = self;
     }
 
     public ArrayList<Skill> getInterest() {
@@ -55,9 +44,5 @@ public class Person {
     
     public void addSkill(Skill skill){
         this.known.add(skill);
-    }
-    
-    public String toString(){
-        return self.toString();
     }
 }

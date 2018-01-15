@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI;
+package br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI;
 
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.controler.OntologyManager;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.dao.UserDAO;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.model.Person;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.model.Role;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.model.Skill;
+import br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.ontologyModel.Person;
+import br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.ontologyModel.Role;
+import br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.ontologyModel.Skill;
 import java.util.ArrayList;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;

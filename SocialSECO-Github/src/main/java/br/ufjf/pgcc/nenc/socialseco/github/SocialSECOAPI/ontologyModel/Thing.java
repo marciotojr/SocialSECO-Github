@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.model;
+package br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.ontologyModel;
 
 import org.apache.jena.rdf.model.RDFNode;
 
 /**
  *
- * @author Marcio Júnior
+ * @author marci
  */
-public class Institution {
+public abstract class Thing {
     RDFNode self;
-
-    public Institution(RDFNode self) {
+    
+    public Thing(RDFNode self) {
         this.self = self;
     }
 
@@ -29,5 +29,4 @@ public class Institution {
     public String toString(){
         return self.toString();
     }
-    
 }

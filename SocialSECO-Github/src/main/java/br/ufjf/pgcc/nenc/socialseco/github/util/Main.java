@@ -1,7 +1,7 @@
 package br.ufjf.pgcc.nenc.socialseco.github.util;
 
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.controler.OntologyManager;
-import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.SocialSECOAPI.GetRecomendedDevelopers;
+import br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.GetRecomendedDevelopers;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.ColaboratorsService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.LanguageService;
 import br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service.githubAPIAccess.RepositoryFollowerService;
