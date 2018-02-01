@@ -127,7 +127,7 @@ public class OntologyManager {
             ObjectProperty colaborates = ontModel.getObjectProperty(baseURI + "collaborates");
             indUser.addProperty(colaborates, indRepo);
 
-            Individual software = ontModel.getIndividual(baseURI + currentRepo.getURISuffix() + "+software");
+            Individual software = ontModel.getIndividual(baseURI + currentRepo.getURISuffix());
             indUser.addProperty(colaborates, software);
 
             software.addProperty(builtForPlatform, platform);
@@ -217,6 +217,7 @@ public class OntologyManager {
                 }
             }
         }
+        saveOntology("temp.owl");
         return ontModel;
     }
 
@@ -329,5 +330,9 @@ public class OntologyManager {
             Logger.getLogger(OntologyManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public OntModel getModel(){
+        return ontModel;
     }
 }

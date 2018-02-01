@@ -83,6 +83,10 @@
             <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#collaborates"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isHostedIn"/>
         </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#develops"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/marciojúnior/ontologies/2017/6/developer_s-social-network#isHostedIn"/>
+        </owl:propertyChainAxiom>
     </owl:ObjectProperty>
     
 
