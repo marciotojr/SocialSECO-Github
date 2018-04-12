@@ -5,8 +5,8 @@
  */
 package br.ufjf.pgcc.nenc.socialseco.github.githubCrawler.service;
 
-import br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.GetIntitutionsInEcosystem;
-import br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.GetRecomendedDevelopers;
+import br.ufjf.pgcc.nenc.socialseco.github.socialSECOAPI.GetIntitutionsInEcosystem;
+import br.ufjf.pgcc.nenc.socialseco.github.socialSECOAPI.GetRecomendedDevelopers;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;

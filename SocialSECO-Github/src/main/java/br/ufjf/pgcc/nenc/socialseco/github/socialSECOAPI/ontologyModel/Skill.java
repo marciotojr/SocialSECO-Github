@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.ontologyModel;
+package br.ufjf.pgcc.nenc.socialseco.github.socialSECOAPI.ontologyModel;
 
 import org.apache.jena.rdf.model.RDFNode;
 

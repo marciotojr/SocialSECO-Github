@@ -1,6 +1,6 @@
 package br.ufjf.pgcc.nenc.socialseco.github.util;
 
-import br.ufjf.pgcc.nenc.socialseco.github.SocialSECOAPI.GetRecomendedDevelopers;
+import br.ufjf.pgcc.nenc.socialseco.github.socialSECOAPI.GetRecomendedDevelopers;
 import br.ufjf.pgcc.nenc.socialseco.github.view.graph.GraphGenerator;
 
 /*
